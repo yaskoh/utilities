@@ -6,7 +6,7 @@ pushd $(dirname ${0}) > /dev/null
 
 if [ ! -d ${HOME}/bin ]; then mkdir ${TARGETDIR}; fi
 
-for i in $(ls *.*)
+for i in $(ls *.sh)
 do
   fn=${i%.*}
   if [ $(basename ${i}) = $(basename ${0}) ]; then continue; fi
