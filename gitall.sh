@@ -26,6 +26,37 @@ if [ ! -f ${GLIST} ]; then
   exit
 fi
 
+# show list file ($1: showlist)
+if [ "${1}" = "showlist" ]; then
+  inc=1
+  for i in $(cat ${GLIST})
+  do
+    echo ${inc} : ${i}
+    inc=$((${inc}+1))
+  done
+  exit
+fi
+
+# list file ($1: pushd)
+# it doesn't work well by itself. use "source"/"." command when using this option.
+if [ "${1}" = "pushd" ]; then
+  inc=1
+  for i in $(cat ${GLIST})
+  do
+    if [ "${2}" = "${inc}" ]; then
+      pushd ${i}
+      return 0 2> /dev/null
+      echo "use 'source' command when use this option."
+      exit
+    fi
+    inc=$((${inc}+1))
+  done
+  echo "can't find such a number '${2}'. try another one!"
+  return 1 2> /dev/null
+  echo "use 'source' command when use this option."
+  exit
+fi
+
 # move to each directory and do command
 for i in $(cat ${GLIST})
 do
